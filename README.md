@@ -18,7 +18,7 @@
 | `alexscaves` | Alex洞穴 | 7 |
 | `alexscavesdelight` | Alex洞穴乐事 | 110 |
 | `alexsmobsinteraction` | Alex生物 | 130 |
-| `arbitrarydelight` | — | 59 |
+| `arbitrarydelight` | 任意乐事 | 59 |
 | `biomesoplenty` | 超多生物群系 | 3 |
 | `cratedelight` | 装箱乐事 | 16 |
 | `cratedelightcroptopia` | 装箱乐事：作物盛景 | 58 |
