@@ -13,28 +13,28 @@
 
 ## 📦 已汉化模组
 
-| 模组 ID | 翻译条目 |
-|---------|---------|
-| `alexscaves` | 7 |
-| `alexscavesdelight` | 110 |
-| `alexsmobsinteraction` | 130 |
-| `arbitrarydelight` | 59 |
-| `biomesoplenty` | 3 |
-| `cratedelight` | 16 |
-| `cratedelightcroptopia` | 58 |
-| `farmersdelight_extended` | 21 |
-| `herbalists_delight` | 87 |
-| `miners_delight` | 48 |
-| `moreculling` | 4 |
-| `mowziesmobs` | 50 |
-| `oaksdelight` | 121 |
-| `sodium` | 80 |
-| `sodium-extra` | 13 |
-| `sodiumdynamiclights` | 34 |
-| `spawn` | 368 |
-| `twm` | 93 |
-| `valheim_delight` | 41 |
-| **合计** | **1343** |
+| 模组 ID | 常用名称 | 翻译条目 |
+|---------|---------|---------|
+| `alexscaves` | Alex 洞穴 | 7 |
+| `alexscavesdelight` | Alex 洞穴乐事 | 110 |
+| `alexsmobsinteraction` | Alex 动物交互 | 130 |
+| `arbitrarydelight` | — | 59 |
+| `biomesoplenty` | 丰饶生物群系 | 3 |
+| `cratedelight` | — | 16 |
+| `cratedelightcroptopia` | — | 58 |
+| `farmersdelight_extended` | — | 21 |
+| `herbalists_delight` | 药师乐事 | 87 |
+| `miners_delight` | 矿工乐事 | 48 |
+| `moreculling` | 更多消融 | 4 |
+| `mowziesmobs` | — | 50 |
+| `oaksdelight` | — | 121 |
+| `sodium` | 钠 | 80 |
+| `sodium-extra` | — | 13 |
+| `sodiumdynamiclights` | — | 34 |
+| `spawn` | 出生点管理 | 368 |
+| `twm` | — | 93 |
+| `valheim_delight` | 英灵乐事 | 41 |
+| **合计** | | **1343** |
 
 ---
 
