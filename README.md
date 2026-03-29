@@ -13,28 +13,28 @@
 
 ## 📦 已汉化模组
 
-| 模组 ID | 翻译条目 |
-|---------|---------|
-| `alexscaves` | 7 |
-| `alexscavesdelight` | 110 |
-| `alexsmobsinteraction` — Alex 的生物：交互 | 130 |
-| `arbitrarydelight` | 59 |
-| `biomesoplenty` — 超多生物群系 | 3 |
-| `cratedelight` — 装箱乐事 | 16 |
-| `cratedelightcroptopia` — 装箱乐事：作物盛景 | 58 |
-| `farmersdelight_extended` | 21 |
-| `herbalists_delight` | 87 |
-| `miners_delight` — 矿工乐事 | 48 |
-| `moreculling` — More Culling | 4 |
-| `mowziesmobs` — Mowzie的灾变 | 50 |
-| `oaksdelight` — Oaks Delight | 121 |
-| `sodium` | 80 |
-| `sodium-extra` — 钠 · 扩展 | 13 |
-| `sodiumdynamiclights` — 钠/Embeddium：动态光源 | 34 |
-| `spawn` | 368 |
-| `twm` — [TWM]荒野更新 | 93 |
-| `valheim_delight` | 41 |
-| **合计** | **1343** |
+| 模组 ID | 名称 | 翻译条目 | 来源 |
+|---------|------|---------|------|
+| `alexscaves` | Alexs Caves Delight | 7 | MC百科 |
+| `alexscavesdelight` | Alexs Caves Delight | 110 | MC百科 |
+| `alexsmobsinteraction` | Alex 的生物：交互 | 130 | MC百科 |
+| `arbitrarydelight` | — | 59 | 无记录 |
+| `biomesoplenty` | Biomes O' Plenty（超多生物群系） | 3 | Modrinth |
+| `cratedelight` | 装箱乐事 | 16 | MC百科 |
+| `cratedelightcroptopia` | 装箱乐事：作物盛景 | 58 | MC百科 |
+| `farmersdelight_extended` | — | 21 | 无记录 |
+| `herbalists_delight` | 药师乐事 | 87 | lang 文件 |
+| `miners_delight` | 矿工乐事 | 48 | MC百科 |
+| `moreculling` | More Culling | 4 | MC百科 |
+| `mowziesmobs` | Mowzie's Mobs | 50 | Modrinth |
+| `oaksdelight` | Oaks Delight | 121 | Modrinth |
+| `sodium` | Sodium（钠） | 80 | Modrinth |
+| `sodium-extra` | Sodium Extra（钠·扩展） | 13 | Modrinth |
+| `sodiumdynamiclights` | 钠/Embeddium：动态光源 | 34 | MC百科 |
+| `spawn` | Smart Spawn | 368 | MC百科 |
+| `twm` | [TWM]荒野更新 | 93 | MC百科 |
+| `valheim_delight` | Valheim Delight | 41 | Modrinth |
+| **合计** | | **1343** | |
 
 ---
 
@@ -66,4 +66,4 @@
 ### v3.0.0 (2026-03-29)
 - 🤖 **仓库重构**：从单一 FD 附属汉化包 → 通用模组汉化集合
 - ➕ 新增 12 个模组汉化，共 19 个模组，1343 条翻译
-- 📝 MC百科 逐一确认译名，批量审查修正
+- 📝 多源审查（MC百科 + Modrinth + lang 文件）确认译名
