@@ -1,0 +1,6 @@
+{
+  "moreculling.config.option.dontCull": "不剔除",
+  "moreculling.config.option.dontCull.tooltip": "在此处添加方块ID以防止其被剔除。例如：minecraft:bamboo",
+  "moreculling.config.option.paintingCulling": "画剔除",
+  "moreculling.config.option.paintingCulling.tooltip": "剔除画的背面和内部面"
+}

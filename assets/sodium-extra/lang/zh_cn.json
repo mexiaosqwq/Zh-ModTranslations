@@ -1,0 +1,15 @@
+{
+  "options.particles.minecraft.block_crumble": "方块破碎",
+  "options.particles.minecraft.block_crumble.tooltip": "",
+  "options.particles.minecraft.ominous_spawning": "不祥生成",
+  "options.particles.minecraft.ominous_spawning.tooltip": "",
+  "options.particles.minecraft.trail": "拖尾",
+  "options.particles.minecraft.trail.tooltip": "切换吱嘎生物与其连接的心形方块之间的粒子拖尾。用于追踪连接但可能影响性能。",
+  "options.particles.minecraft.trial_spawner_detection_ominous": "不详试炼刷怪笼检测",
+  "sodium-extra.option.moon": "月亮",
+  "sodium-extra.option.moon.tooltip": "启用后，将渲染月亮。",
+  "sodium-extra.option.sun": "太阳",
+  "sodium-extra.option.sun.tooltip": "启用后，将渲染太阳。",
+  "sodium-extra.overlay.coordinates": "X: %s, Y: %s, Z: %s",
+  "sodium-extra.overlay.fps": "%s FPS"
+}
