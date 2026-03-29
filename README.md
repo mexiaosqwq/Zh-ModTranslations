@@ -15,25 +15,25 @@
 
 | 模组 ID | 名称 | 翻译条目 |
 |---------|------|---------|
-| `alexscaves` | Alexs Caves Delight | 7 |
-| `alexscavesdelight` | Alexs Caves Delight | 110 |
-| `alexsmobsinteraction` | Alex 的生物：交互 | 130 |
+| `alexscaves` | Alex洞穴 | 7 |
+| `alexscavesdelight` | Alex洞穴乐事 | 110 |
+| `alexsmobsinteraction` | Alex生物 | 130 |
 | `arbitrarydelight` | — | 59 |
 | `biomesoplenty` | 超多生物群系 | 3 |
 | `cratedelight` | 装箱乐事 | 16 |
 | `cratedelightcroptopia` | 装箱乐事：作物盛景 | 58 |
-| `farmersdelight_extended` | — | 21 |
+| `farmersdelight_extended` | 农夫乐事扩展 | 21 |
 | `herbalists_delight` | 药师乐事 | 87 |
 | `miners_delight` | 矿工乐事 | 48 |
 | `moreculling` | More Culling | 4 |
-| `mowziesmobs` | Mowzie's Mobs | 50 |
-| `oaksdelight` | Oaks Delight | 121 |
+| `mowziesmobs` | Mowzie的灾变 | 50 |
+| `oaksdelight` | 橡木乐事 | 121 |
 | `sodium` | 钠 | 80 |
 | `sodium-extra` | 钠·扩展 | 13 |
 | `sodiumdynamiclights` | 钠/Embeddium：动态光源 | 34 |
-| `spawn` | Smart Spawn | 368 |
+| `spawn` | spawn | 368 |
 | `twm` | [TWM]荒野更新 | 93 |
-| `valheim_delight` | Valheim Delight | 41 |
+| `valheim_delight` | 英灵乐事 | 41 |
 | **合计** | | **1343** | |
 
 ---
