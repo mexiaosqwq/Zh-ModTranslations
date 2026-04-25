@@ -4,12 +4,8 @@
 # 运行时数据
 runs/
 
-# 翻译工作目录
-langs/
-data/
-
-# 模组文件（只读源）
-mods/
+# 翻译工作目录（mods, data, langs, 参考包等）
+workdir/
 
 # Python 缓存
 __pycache__/

@@ -19,7 +19,7 @@ from typing import Optional, Dict, List, Tuple
 ENC = "utf-8"
 
 # 常量定义
-DEFAULT_LANGS_ROOT = "langs"
+DEFAULT_LANGS_ROOT = "workdir/langs"
 DEFAULT_PACK_ROOT = f"{DEFAULT_LANGS_ROOT}/Minecraft-Mod-Language-Modpack-Converted-1.20.1"
 DEFAULT_PACK_VERSION = "1.20.1"  # 默认版本，当无法检测到版本时使用
 
@@ -52,8 +52,8 @@ def get_pack_root(version: str, langs_root: str = DEFAULT_LANGS_ROOT) -> Path:
 
 # 版本到资源包路径的映射
 VERSION_RP_PATHS = {
-    "1.20.1": "~/zh/versions/1.20.1/resourcepacks/模组汉化.zip",
-    "1.21.1": "~/zh/versions/1.21.1生物农业/resourcepacks/模组汉化.zip",
+    "1.20.1": "workdir/versions/1.20.1/resourcepacks/模组汉化.zip",
+    "1.21.1": "workdir/versions/1.21.1生物农业/resourcepacks/模组汉化.zip",
 }
 
 
@@ -424,98 +424,13 @@ def cmd_make_pending(args) -> int:
     if not jar_path.exists():
         return err(f"JAR文件不存在: {jar_path}")
 
-    jarstem = args.jarname or jar_path.stem
-    output_dir = Path(args.output) if args.output else Path(args.data_root) / jarstem
+    log(f"正在处理 {jar_path.name}...")
+    modid, count, err_msg = _process_single_jar(jar_path, args)
 
-    # 自动检测版本并选择参考包（如果用户未手动指定）
-    if args.pack_root == DEFAULT_PACK_ROOT:  # 使用默认值，未手动指定
-        detected_version = detect_mod_version_from_jar(jar_path.name)
-        if detected_version:
-            pack_root = get_pack_root(detected_version, args.langs_root)
-            log(f"自动检测模组版本: {detected_version}，使用参考包: {pack_root}")
-        else:
-            pack_root = Path(DEFAULT_PACK_ROOT)
-            log(f"无法从 JAR 文件名检测版本，使用默认参考包: {pack_root}")
-    else:
-        pack_root = Path(args.pack_root)
+    if err_msg:
+        return err(f"处理失败: {err_msg}")
 
-    # 1) extract（可选跳过）
-    if not args.skip_extract:
-        log(f"正在提取 {jar_path.name}...")
-        try:
-            extract_jar_json(jar_path, output_dir)
-        except Exception as e:
-            return err(f"提取失败: {e}")
-    else:
-        log(f"跳过提取（--skip-extract），使用现有目录: {output_dir}")
-
-    # 2) detect modid
-    candidates = find_modid_candidates(output_dir)
-    if not candidates:
-        return err(f"未找到 assets/*/lang/en_us.json（目录: {output_dir}）")
-
-    if args.modid:
-        en_path = output_dir / "assets" / args.modid / "lang" / "en_us.json"
-        if not en_path.exists():
-            print("[TK] Error: 指定 --modid 但对应 en_us.json 不存在：", file=sys.stderr)
-            print(f"  {en_path}", file=sys.stderr)
-            print("[TK] 候选：", file=sys.stderr)
-            for p in candidates:
-                print(f"  - modid={get_modid_from_en_path(p)} path={p}", file=sys.stderr)
-            return 2
-        modid = args.modid
-    else:
-        if len(candidates) > 1:
-            print("[TK] Error: 发现多个 en_us.json，请用 --modid 指定：", file=sys.stderr)
-            for p in candidates:
-                print(f"  - modid={get_modid_from_en_path(p)} path={p}", file=sys.stderr)
-            return 2
-        en_path = candidates[0]
-        modid = get_modid_from_en_path(en_path)
-
-    official_zh = output_dir / "assets" / modid / "lang" / "zh_cn.json"
-    pack_zh = pack_root / "assets" / modid / "lang" / "zh_cn.json"
-
-    en_data = read_json(en_path)
-    if en_data is None:
-        return 1
-
-    official_data = read_json(official_zh) if official_zh.exists() else {}
-    if official_zh.exists() and official_data is None:
-        return 1
-
-    pack_data = read_json(pack_zh) if pack_zh.exists() else {}
-    if pack_zh.exists() and pack_data is None:
-        return 1
-
-    # 警告提示
-    if not official_zh.exists():
-        log(f"Warning: 官方中文不存在 {official_zh}，将视为空集处理")
-    if not pack_zh.exists():
-        log(f"Warning: 参考汉化包不存在 {pack_zh}，将视为空集处理")
-
-    # step1: en - official
-    step1 = diff_missing(en_data, official_data)
-    # final: step1 - pack
-    final = diff_missing(step1, pack_data)
-
-    # 删除画作作者键（不翻译）
-    final = {k: v for k, v in final.items() if not k.endswith('.author')}
-
-    langs_root = Path(args.langs_root)
-    pending_dir = langs_root / "pending_translation"
-    pending_dir.mkdir(parents=True, exist_ok=True)
-    out_path = Path(args.pending_out) if args.pending_out else (pending_dir / f"{modid}.json")
-
-    if not write_json(out_path, final, indent=2, backup=not args.no_backup):
-        return 1
-
-    log(f"jarstem: {jarstem}")
-    log(f"modid  : {modid}")
-    log(f"en_us  : {en_path} ({len(en_data)} keys)")
-    log(f"official zh_cn: {official_zh} ({len(official_data)} keys, 0=不存在)")
-    log(f"pack zh_cn    : {pack_zh} ({len(pack_data)} keys, 0=不存在)")
-    log(f"pending(final): {out_path} ({len(final)} keys)")
+    log(f"成功: modid={modid}, pending={count} keys")
     return 0
 
 
@@ -635,6 +550,193 @@ def cmd_import_rp(args) -> int:
     return 0
 
 
+# ==================== 批量命令 ====================
+
+def _process_single_jar(jar_path: Path, args) -> Tuple[str, int, str]:
+    """
+    处理单个 JAR 的核心逻辑（被 cmd_make_pending 和 cmd_batch_make_pending 共用）
+    返回 (modid, pending_keys_count, error_message)
+    成功时 error_message 为空
+    """
+    jarstem = args.jarname or jar_path.stem
+    output_dir = Path(args.output) if args.output else Path(args.data_root) / jarstem
+
+    # 自动检测版本并选择参考包
+    if args.pack_root == DEFAULT_PACK_ROOT:
+        detected_version = detect_mod_version_from_jar(jar_path.name)
+        if detected_version:
+            pack_root = get_pack_root(detected_version, args.langs_root)
+        else:
+            pack_root = Path(DEFAULT_PACK_ROOT)
+    else:
+        pack_root = Path(args.pack_root)
+
+    # 1) extract
+    if not args.skip_extract:
+        try:
+            extract_jar_json(jar_path, output_dir)
+        except Exception as e:
+            return ("", 0, f"提取失败: {e}")
+
+    # 2) detect modid
+    candidates = find_modid_candidates(output_dir)
+    if not candidates:
+        return ("", 0, f"未找到 assets/*/lang/en_us.json")
+
+    if args.modid:
+        en_path = output_dir / "assets" / args.modid / "lang" / "en_us.json"
+        if not en_path.exists():
+            modid_list = [f"  - modid={get_modid_from_en_path(p)}" for p in candidates]
+            return ("", 0, f"指定 --modid 但 en_us.json 不存在\n候选:\n" + "\n".join(modid_list))
+        modid = args.modid
+    else:
+        if len(candidates) > 1:
+            modid_list = [f"  - modid={get_modid_from_en_path(p)}" for p in candidates]
+            return ("", 0, f"发现多个 en_us.json，请用 --modid 指定:\n" + "\n".join(modid_list))
+        en_path = candidates[0]
+        modid = get_modid_from_en_path(en_path)
+
+    official_zh = output_dir / "assets" / modid / "lang" / "zh_cn.json"
+    pack_zh = pack_root / "assets" / modid / "lang" / "zh_cn.json"
+
+    en_data = read_json(en_path)
+    if en_data is None:
+        return (modid, 0, f"en_us.json 无效")
+
+    official_data = read_json(official_zh) if official_zh.exists() else {}
+    if official_zh.exists() and official_data is None:
+        return (modid, 0, f"官方 zh_cn.json 无效")
+
+    pack_data = read_json(pack_zh) if pack_zh.exists() else {}
+    if pack_zh.exists() and pack_data is None:
+        return (modid, 0, f"参考包 zh_cn.json 无效")
+
+    # diff
+    step1 = diff_missing(en_data, official_data)
+    final = diff_missing(step1, pack_data)
+
+    # 过滤不翻译键
+    final = {k: v for k, v in final.items() if not k.endswith('.author')}
+
+    # 写入 pending
+    langs_root = Path(args.langs_root)
+    pending_dir = langs_root / "pending_translation"
+    pending_dir.mkdir(parents=True, exist_ok=True)
+    out_path = Path(args.pending_out) if args.pending_out else (pending_dir / f"{modid}.json")
+
+    if not write_json(out_path, final, indent=2, backup=not args.no_backup):
+        return (modid, len(final), f"写入 pending 文件失败")
+
+    return (modid, len(final), "")
+
+
+def cmd_batch_make_pending(args) -> int:
+    """批量一键生成真正缺失：扫描 mods/ 目录下所有 JAR"""
+    mods_dir = Path(args.mods_root)
+    if not mods_dir.exists():
+        return err(f"mods 目录不存在: {mods_dir}")
+
+    jars = sorted(mods_dir.glob("*.jar"))
+    if not jars:
+        return err(f"mods 目录下没有找到 .jar 文件: {mods_dir}")
+
+    # 解析 --modids 过滤
+    filter_modids = set()
+    if args.modids:
+        filter_modids = set(m.strip() for m in args.modids.split(",") if m.strip())
+
+    log(f"找到 {len(jars)} 个 JAR 文件，开始批量处理...")
+    results = []
+    total_ok = 0
+    total_fail = 0
+
+    for jar_path in jars:
+        # 如果指定了 modid 过滤器，尝试从文件名猜测
+        if filter_modids:
+            matched = False
+            for fm in filter_modids:
+                if fm.lower() in jar_path.stem.lower():
+                    matched = True
+                    break
+            if not matched:
+                log(f"跳过 {jar_path.name}（不匹配 --modids 过滤器）")
+                continue
+
+        print(f"\n{'='*50}")
+        log(f"正在处理: {jar_path.name}")
+        modid, count, err_msg = _process_single_jar(jar_path, args)
+
+        if err_msg:
+            print(f"  [失败] {err_msg}")
+            results.append((jar_path.name, modid or "?", 0, err_msg))
+            total_fail += 1
+        else:
+            print(f"  [成功] modid={modid}, pending={count} keys")
+            results.append((jar_path.name, modid, count, ""))
+            total_ok += 1
+
+    # 汇总报告
+    print(f"\n{'='*50}")
+    log(f"批量处理完成: 成功 {total_ok}, 失败 {total_fail}, 总计 {total_ok + total_fail}")
+    if total_fail > 0:
+        print(f"\n失败列表:")
+        for name, mid, cnt, msg in results:
+            if msg:
+                print(f"  ✗ {name} (modid={mid})")
+                print(f"    原因: {msg}")
+    if total_ok > 0:
+        print(f"\n成功列表:")
+        for name, mid, cnt, msg in results:
+            if not msg:
+                print(f"  ✓ {name} → modid={mid}, {cnt} keys")
+
+    return 1 if total_fail > 0 else 0
+
+
+def cmd_batch_sync_lang(args) -> int:
+    """批量同步 pending 文件到工作目录"""
+    langs_root = Path(args.langs_root)
+    pending_dir = langs_root / "pending_translation"
+    if not pending_dir.exists():
+        return err(f"pending 目录不存在: {pending_dir}")
+
+    pending_files = sorted(pending_dir.glob("*.json"))
+    if not pending_files:
+        return err(f"pending 目录下没有 .json 文件: {pending_dir}")
+
+    log(f"找到 {len(pending_files)} 个 pending 文件，开始批量同步...")
+    total_ok = 0
+    total_fail = 0
+
+    for pf in pending_files:
+        modid = pf.stem
+        print(f"\n{'='*50}")
+        log(f"正在同步: {modid}")
+
+        # 构造 sync-lang 的 args（复用 cmd_sync_lang 逻辑）
+        sync_args = argparse.Namespace(
+            modid=modid,
+            langs_root=args.langs_root,
+            pending=str(pf),
+            output=str(langs_root / modid / "zh_cn.json"),
+            no_clean=args.no_clean,
+            no_validate=args.no_validate,
+            no_backup=args.no_backup,
+        )
+        rc = cmd_sync_lang(sync_args)
+
+        if rc == 0:
+            log(f"同步成功: {modid}")
+            total_ok += 1
+        else:
+            log(f"同步失败: {modid} (返回码 {rc})")
+            total_fail += 1
+
+    print(f"\n{'='*50}")
+    log(f"批量同步完成: 成功 {total_ok}, 失败 {total_fail}, 总计 {total_ok + total_fail}")
+    return 1 if total_fail > 0 else 0
+
+
 # ==================== 主程序 ====================
 
 def main():
@@ -645,13 +747,13 @@ def main():
         epilog="""
 示例:
   # 提取JAR数据（只提取 json）
-  python3 translation_toolkit.py extract-jar mods/spawn.jar -o data/spawn/
+  python3 translation_toolkit.py extract-jar workdir/mods/spawn.jar -o workdir/data/spawn/
 
   # 提取未翻译条目（en 有，zh 没有）
-  python3 translation_toolkit.py diff data/spawn/assets/spawn/lang/en_us.json data/spawn/assets/spawn/lang/zh_cn.json -o to_translate.json
+  python3 translation_toolkit.py diff workdir/data/spawn/assets/spawn/lang/en_us.json workdir/data/spawn/assets/spawn/lang/zh_cn.json -o to_translate.json
 
   # 一键生成真正缺失（扣掉官方+参考包）
-  python3 translation_toolkit.py make-pending mods/spawn.jar
+  python3 translation_toolkit.py make-pending workdir/mods/spawn.jar
 
   # 同步 pending 到最终文件（保留已有翻译）并 clean/validate
   python3 translation_toolkit.py sync-lang spawn
@@ -659,8 +761,14 @@ def main():
   # 导入资源包 zip（安全重打包）
   python3 translation_toolkit.py import-rp "~/.../resourcepacks/模组汉化5.0.zip" spawn
 
+  # 批量 make-pending（扫描 workdir/mods/ 下所有 JAR）
+  python3 translation_toolkit.py batch-make-pending
+
+  # 批量 sync-lang（同步所有 pending 文件）
+  python3 translation_toolkit.py batch-sync-lang
+
   # 查询物品信息（注意传 data/<jar>/data/<namespace>/）
-  python3 translation_toolkit.py query data/spawn/data/spawn/ spawn:angler_fish
+  python3 translation_toolkit.py query workdir/data/spawn/data/spawn/ spawn:angler_fish
         """
     )
     sub = parser.add_subparsers(dest="cmd", help="可用命令")
@@ -708,7 +816,7 @@ def main():
     p_mp = sub.add_parser("make-pending", help="提取JAR并生成真正缺失的 pending_translation/<modid>.json")
     p_mp.add_argument("jar", help="JAR文件路径（mods/*.jar）")
     p_mp.add_argument("-o", "--output", help="提取输出目录（默认 data/<jarstem>/）")
-    p_mp.add_argument("--data-root", default="data", help="默认提取根目录（当未指定 -o 时使用）")
+    p_mp.add_argument("--data-root", default="workdir/data", help="默认提取根目录（当未指定 -o 时使用）")
     p_mp.add_argument("--jarname", default=None, help="自定义 jarstem（默认 jar 文件名去 .jar）")
     p_mp.add_argument("--modid", default=None, help="当存在多个 assets/*/lang/en_us.json 时手动指定")
     p_mp.add_argument("--pack-root", default=DEFAULT_PACK_ROOT,
@@ -738,6 +846,25 @@ def main():
     p_ir.add_argument("--no-backup", action="store_true", help="不备份原资源包 zip")
     p_ir.add_argument("--no-auto-path", action="store_true", help="禁用自动路径检测（需手动指定 rp 参数）")
 
+    # batch-make-pending (NEW)
+    p_bmp = sub.add_parser("batch-make-pending", help="批量生成 pending：扫描 mods/ 下所有 JAR")
+    p_bmp.add_argument("--mods-root", default="workdir/mods", help="mods 根目录（默认 workdir/mods）")
+    p_bmp.add_argument("--data-root", default="workdir/data", help="默认提取根目录（默认 workdir/data）")
+    p_bmp.add_argument("--modids", default=None, help="只处理指定 modid（逗号分隔）")
+    p_bmp.add_argument("--pack-root", default=DEFAULT_PACK_ROOT, help="参考汉化包根目录")
+    p_bmp.add_argument("--langs-root", default=DEFAULT_LANGS_ROOT, help="langs 根目录")
+    p_bmp.add_argument("--pending-out", default=None, help="pending 输出路径（默认 langs/pending_translation/<modid>.json）")
+    p_bmp.add_argument("--jarname", default=None, help="自定义 jarstem")
+    p_bmp.add_argument("--skip-extract", action="store_true", help="跳过提取")
+    p_bmp.add_argument("--no-backup", action="store_true", help="不创建备份")
+
+    # batch-sync-lang (NEW)
+    p_bsl = sub.add_parser("batch-sync-lang", help="批量同步 pending 文件到工作目录")
+    p_bsl.add_argument("--langs-root", default=DEFAULT_LANGS_ROOT, help="langs 根目录")
+    p_bsl.add_argument("--no-clean", action="store_true", help="同步后不执行 clean")
+    p_bsl.add_argument("--no-validate", action="store_true", help="同步后不执行 validate")
+    p_bsl.add_argument("--no-backup", action="store_true", help="不创建备份")
+
     args = parser.parse_args()
 
     if not args.cmd:
@@ -755,6 +882,8 @@ def main():
         "make-pending": cmd_make_pending,
         "sync-lang": cmd_sync_lang,
         "import-rp": cmd_import_rp,
+        "batch-make-pending": cmd_batch_make_pending,
+        "batch-sync-lang": cmd_batch_sync_lang,
     }
 
     handler = handlers.get(args.cmd)
