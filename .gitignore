@@ -1,0 +1,20 @@
+# Claude Code 本地配置
+.claude/
+
+# 运行时数据
+runs/
+
+# 翻译工作目录
+langs/
+data/
+
+# 模组文件（只读源）
+mods/
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 备份文件
+*.bak
+*.backup
