@@ -19,7 +19,7 @@ from typing import Optional, Dict, List, Tuple
 ENC = "utf-8"
 
 # 常量定义
-DEFAULT_LANGS_ROOT = "workdir/langs"
+DEFAULT_LANGS_ROOT = "langs"
 DEFAULT_PACK_ROOT = f"{DEFAULT_LANGS_ROOT}/Minecraft-Mod-Language-Modpack-Converted-1.20.1"
 DEFAULT_PACK_VERSION = "1.20.1"  # 默认版本，当无法检测到版本时使用
 
@@ -747,13 +747,13 @@ def main():
         epilog="""
 示例:
   # 提取JAR数据（只提取 json）
-  python3 bin/translation_toolkit.py extract-jar workdir/mods/spawn.jar -o workdir/data/spawn/
+  python3 bin/translation_toolkit.py extract-jar mods/spawn.jar -o data/spawn/
 
   # 提取未翻译条目（en 有，zh 没有）
-  python3 bin/translation_toolkit.py diff workdir/data/spawn/assets/spawn/lang/en_us.json workdir/data/spawn/assets/spawn/lang/zh_cn.json -o to_translate.json
+  python3 bin/translation_toolkit.py diff data/spawn/assets/spawn/lang/en_us.json data/spawn/assets/spawn/lang/zh_cn.json -o to_translate.json
 
   # 一键生成真正缺失（扣掉官方+参考包）
-  python3 bin/translation_toolkit.py make-pending workdir/mods/spawn.jar
+  python3 bin/translation_toolkit.py make-pending mods/spawn.jar
 
   # 同步 pending 到最终文件（保留已有翻译）并 clean/validate
   python3 bin/translation_toolkit.py sync-lang spawn
@@ -761,14 +761,14 @@ def main():
   # 导入资源包 zip（安全重打包）
   python3 bin/translation_toolkit.py import-rp "~/.../resourcepacks/模组汉化5.0.zip" spawn
 
-  # 批量 make-pending（扫描 workdir/mods/ 下所有 JAR）
+  # 批量 make-pending（扫描 mods/ 下所有 JAR）
   python3 bin/translation_toolkit.py batch-make-pending
 
   # 批量 sync-lang（同步所有 pending 文件）
   python3 bin/translation_toolkit.py batch-sync-lang
 
   # 查询物品信息（注意传 data/<jar>/data/<namespace>/）
-  python3 bin/translation_toolkit.py query workdir/data/spawn/data/spawn/ spawn:angler_fish
+  python3 bin/translation_toolkit.py query data/spawn/data/spawn/ spawn:angler_fish
         """
     )
     sub = parser.add_subparsers(dest="cmd", help="可用命令")
@@ -816,7 +816,7 @@ def main():
     p_mp = sub.add_parser("make-pending", help="提取JAR并生成真正缺失的 pending_translation/<modid>.json")
     p_mp.add_argument("jar", help="JAR文件路径（mods/*.jar）")
     p_mp.add_argument("-o", "--output", help="提取输出目录（默认 data/<jarstem>/）")
-    p_mp.add_argument("--data-root", default="workdir/data", help="默认提取根目录（当未指定 -o 时使用）")
+    p_mp.add_argument("--data-root", default="data", help="默认提取根目录（当未指定 -o 时使用）")
     p_mp.add_argument("--jarname", default=None, help="自定义 jarstem（默认 jar 文件名去 .jar）")
     p_mp.add_argument("--modid", default=None, help="当存在多个 assets/*/lang/en_us.json 时手动指定")
     p_mp.add_argument("--pack-root", default=DEFAULT_PACK_ROOT,
@@ -848,8 +848,8 @@ def main():
 
     # batch-make-pending (NEW)
     p_bmp = sub.add_parser("batch-make-pending", help="批量生成 pending：扫描 mods/ 下所有 JAR")
-    p_bmp.add_argument("--mods-root", default="workdir/mods", help="mods 根目录（默认 workdir/mods）")
-    p_bmp.add_argument("--data-root", default="workdir/data", help="默认提取根目录（默认 workdir/data）")
+    p_bmp.add_argument("--mods-root", default="mods", help="mods 根目录（默认 workdir/mods）")
+    p_bmp.add_argument("--data-root", default="data", help="默认提取根目录（默认 workdir/data）")
     p_bmp.add_argument("--modids", default=None, help="只处理指定 modid（逗号分隔）")
     p_bmp.add_argument("--pack-root", default=DEFAULT_PACK_ROOT, help="参考汉化包根目录")
     p_bmp.add_argument("--langs-root", default=DEFAULT_LANGS_ROOT, help="langs 根目录")

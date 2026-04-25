@@ -4,8 +4,10 @@
 # 运行时数据
 runs/
 
-# 翻译工作目录（mods, data, langs, 参考包等）
-workdir/
+# 翻译工作文件：原始JAR、临时数据、工作目录
+mods/
+data/
+langs/
 
 # Python 缓存
 __pycache__/
