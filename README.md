@@ -22,8 +22,8 @@
 | `biomesoplenty` | 超多生物群系 | 3 |
 | `cratedelight` | 装箱乐事 | 16 |
 | `cratedelightcroptopia` | 装箱乐事：作物盛景 | 58 |
-| `create_things_and_misc` | 机械动力：附加 | 189 |
-| `createbigcannons` | 大炮 | 70 |
+| `create_things_and_misc` | 机械动力：实用物件 | 189 |
+| `createbigcannons` | 机械动力：火炮 | 70 |
 | `farmersdelight_extended` | 农夫乐事扩展 | 21 |
 | `herbalists_delight` | 药师乐事 | 87 |
 | `miners_delight` | 矿工乐事 | 48 |
