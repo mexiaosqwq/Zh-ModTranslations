@@ -40,16 +40,16 @@ jobs:
             REPO: ${{ github.repository }}
             PR NUMBER: ${{ github.event.pull_request.number }}
 
-            Please review this pull request and provide feedback on:
-            - Code quality and best practices
-            - Potential bugs or issues
-            - Performance considerations
-            - Security concerns
-            - Test coverage
+            请审查此 Pull Request 并提供改进建议，关注以下方面：
 
-            Use the repository's CLAUDE.md for guidance on style and conventions. Be constructive and helpful in your feedback.
+            - **翻译准确性**：中文译名是否符合模组上下文，是否有误译或生硬表达
+            - **JSON 格式**：文件是否为有效 UTF-8 JSON，无尾随逗号、不匹配括号等问题
+            - **键值完整性**：所有键是否齐全，是否存在孤键（zh_cn 中有但 en_us 中无对应项）
+            - **格式符保留**：`%s`, `%d`, `%1$s`, `{0}`, `\n`, `§a` 等占位符是否完整保留
+            - **术语一致性**：同一模组内及与 Create 系列关联模组的术语是否统一
+            - **规范合规**：是否遵循 CLAUDE.md 中的命名约定和 Minecraft 术语标准
 
-            Use `gh pr comment` with your Bash tool to leave your review as a comment on the PR.
+            参考仓库 CLAUDE.md 的风格约定。请使用 `gh pr comment` 留下审查意见。
 
           # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
           # or https://docs.claude.com/en/docs/claude-code/cli-reference for available options

@@ -22,6 +22,8 @@
 | `biomesoplenty` | 超多生物群系 | 3 |
 | `cratedelight` | 装箱乐事 | 16 |
 | `cratedelightcroptopia` | 装箱乐事：作物盛景 | 58 |
+| `create_things_and_misc` | 机械动力：附加 | 189 |
+| `createbigcannons` | 大炮 | 70 |
 | `farmersdelight_extended` | 农夫乐事扩展 | 21 |
 | `herbalists_delight` | 药师乐事 | 87 |
 | `miners_delight` | 矿工乐事 | 48 |
@@ -34,7 +36,7 @@
 | `spawn` | spawn | 368 |
 | `twm` | [TWM]荒野更新 | 93 |
 | `valheim_delight` | 英灵乐事 | 41 |
-| **合计** | | **1343** | |
+| **合计** | | **1602** | |
 
 ---
 
@@ -65,5 +67,5 @@
 
 ### v3.0.0 (2026-03-29)
 - 🤖 **仓库重构**：从单一 FD 附属汉化包 → 通用模组汉化集合
-- ➕ 新增 12 个模组汉化，共 19 个模组，1343 条翻译
+- ➕ 新增 12 个模组汉化，共 21 个模组，1602 条翻译
 - 📝 多源审查（MC百科 + Modrinth + lang 文件）确认译名

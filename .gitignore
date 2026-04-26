@@ -11,6 +11,19 @@ runs/
 __pycache__/
 *.pyc
 
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor temp files
+*.swp
+*.swo
+*.swn
+*~
+
+# Temp files
+*.tmp
+
 # 备份文件
 *.bak
 *.backup
