@@ -31,7 +31,7 @@
 | `sodium-extra` | 钠·扩展 | 13 |
 | `sodiumdynamiclights` | 钠/Embeddium：动态光源 | 34 |
 | `spawn` | spawn | 368 |
-| `trailandtales_delight` | 足迹与故事乐事 | 1 |
+| `trailandtales_delight` | 樱途旅事 | 1 |
 | `twm` | [TWM]荒野更新 | 93 |
 | `valheim_delight` | 英灵乐事 | 41 |
 | `veggiesdelight` | 蔬菜乐事 | 8 |
