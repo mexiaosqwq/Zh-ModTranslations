@@ -14,7 +14,7 @@
 | `create_things_and_misc` | 机械动力：实用物件 | 189 |
 | `createaddition` | 机械动力：创想附加 | 4 |
 | `createbigcannons` | 机械动力：火炮 | 70 |
-| `dndecor` | 设计装饰 | 448 |
+| `dndecor` | Create: Design n' Decor | 448 |
 | `dndesires` | DnDesires | 117 |
 | `expandeddelight` | 扩展乐事 | 119 |
 | `farmersdelight` | 农夫乐事 | 34 |
