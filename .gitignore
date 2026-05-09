@@ -27,6 +27,9 @@ Thumbs.db
 # 临时参考文件
 .work/
 
+# 审查报告/工作记录
+quality-review.md
+
 # 备份文件
 *.bak
 *.backup

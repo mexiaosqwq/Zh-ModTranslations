@@ -9,6 +9,7 @@ Minecraft 模组汉化资源包仓库（1.20.1+ / 1.21.1+ NeoForge），已汉�
 ```
 Zh-ModTranslations/
 ├── assets/<modid>/lang/zh_cn.json   # 翻译输出（git 跟踪）
+├── MODS.md                           # 完整模组列表
 ├── pack.mcmeta                       # 资源包定义 (pack_format: 32)
 ├── .github/workflows/
 │   ├── claude.yml                    # @claude 触发：Issues/PR 评论交互
@@ -27,8 +28,14 @@ Zh-ModTranslations/
 ## Git 规则
 
 - 只提交 `assets/` 和 `pack.mcmeta`，不提交 `汉化/`（已在 `.gitignore` 排除）
-- 不要带上 `.claude/`、`runs/`、`__pycache__/`
+- 不要带上 `.claude/`、`runs/`、`__pycache__/`、`.work/`
 - Commit 格式：`feat: 添加/更新 <模组名> 汉化`
+- 文档修正用 prefix: `docs:` 或 `chore:`
+
+## 模组译名来源
+
+官方中文名优先从模组 JAR 内的 `zh_cn.json`（itemGroup/advancement.root）获取。
+无官方中文名的模组保留英文名，不自行翻译。
 
 ## GitHub Actions
 
