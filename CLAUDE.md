@@ -9,7 +9,7 @@ Minecraft 模组汉化资源包仓库（1.21.1+ NeoForge），已汉化 34 个�
 ```
 Zh-ModTranslations/
 ├── assets/<modid>/lang/zh_cn.json   # 翻译输出（git 跟踪）
-├── MODS.md                           # 完整模组列表
+├── MODS.md                           # 模组概览
 ├── pack.mcmeta                       # 资源包定义 (pack_format: 32)
 ├── .github/workflows/
 │   ├── claude.yml                    # @claude 触发：Issues/PR 评论交互
@@ -20,7 +20,7 @@ Zh-ModTranslations/
     ├── mods/                         # 待翻译模组 JAR
     ├── langs/                        # 参考包 + 工作文件 + mod_context.json
     ├── data/                         # 提取的原始语言文件
-    └── bin/translation_toolkit.py    # 翻译工具 v12.0
+    └── bin/translation_toolkit.py    # 翻译工具 v13.0
 ```
 
 > **翻译工作请直接查阅 `汉化/CLAUDE.md`**，它是唯一权威指南。本文件仅提供仓库基础设施参考。

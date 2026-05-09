@@ -1,6 +1,5 @@
 # Claude Code 本地配置
 .claude/
-.claude/settings.local.json
 
 # IDE
 .idea/
