@@ -35,4 +35,5 @@
 | `twm` | [TWM]荒野更新 | 93 |
 | `valheim_delight` | 英灵乐事 | 41 |
 | `veggiesdelight` | 蔬菜乐事 | 8 |
-| **合计** | | **2630** |
+| `functionality` | Functionality | 148 |
+| **合计** | | **2778** |
