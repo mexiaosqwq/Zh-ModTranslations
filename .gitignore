@@ -1,5 +1,25 @@
 # Claude Code 本地配置
 .claude/
+.claude/settings.local.json
+
+# IDE
+.idea/
+.vscode/
+
+# 日志
+*.log
+
+# Python 编译产物
+*.pyo
+*.pyd
+
+# 构建输出
+build/
+dist/
+out/
+
+# 编译产物
+*.class
 
 # 运行时数据
 runs/

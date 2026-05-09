@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Minecraft 模组汉化资源包仓库（1.20.1+ / 1.21.1+ NeoForge），已汉化 33 个模组、2630 条翻译。
+Minecraft 模组汉化资源包仓库（1.21.1+ NeoForge），已汉化 34 个模组、2778 条翻译。
 
 ## 仓库结构
 
