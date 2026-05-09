@@ -1,39 +1,34 @@
-# 已汉化模组列表
+# 已汉化模组概览
 
-| 模组 ID | 名称 | 翻译条目 |
-|---------|------|---------|
-| `alexscaves` | Alex洞穴 | 7 |
-| `alexscavesdelight` | Alex洞穴乐事 | 110 |
-| `alexsmobsinteraction` | Alex生物 | 130 |
-| `arbitrarydelight` | 任意乐事 | 59 |
-| `biomesoplenty` | 超多生物群系 | 3 |
-| `crabbersdelight` | 蟹农乐事 | 30 |
-| `cratedelight` | 装箱乐事 | 16 |
-| `cratedelightcroptopia` | 装箱乐事：作物盛景 | 58 |
-| `create` | 机械动力 | 13 |
-| `create_things_and_misc` | 机械动力：实用物件 | 189 |
-| `createaddition` | 机械动力：创想附加 | 4 |
-| `createbigcannons` | 机械动力：火炮 | 70 |
-| `dndecor` | Create: Design n' Decor | 448 |
-| `dndesires` | DnDesires | 117 |
-| `expandeddelight` | 扩展乐事 | 119 |
-| `farmersdelight` | 农夫乐事 | 34 |
-| `farmersdelight_extended` | 农夫乐事扩展 | 21 |
-| `hearthandharvest` | 暖灶丰年 | 130 |
-| `herbalists_delight` | 药师乐事 | 87 |
-| `miners_delight` | 矿工乐事 | 48 |
-| `moreculling` | More Culling | 4 |
-| `mowziesmobs` | Mowzie的灾变 | 50 |
-| `oaksdelight` | 橡木乐事 | 121 |
-| `oceansdelight` | 海洋乐事 | 4 |
-| `sable` | Sable | 120 |
-| `sodium` | 钠 | 80 |
-| `sodium-extra` | 钠·扩展 | 13 |
-| `sodiumdynamiclights` | 钠/Embeddium：动态光源 | 34 |
-| `spawn` | spawn | 368 |
-| `trailandtales_delight` | 樱途旅事 | 1 |
-| `twm` | [TWM]荒野更新 | 93 |
-| `valheim_delight` | 英灵乐事 | 41 |
-| `veggiesdelight` | 蔬菜乐事 | 8 |
-| `functionality` | Functionality | 148 |
-| **合计** | | **2778** |
+> **总计**：34 个模组 · 2778 条翻译 · 1.21.1+ NeoForge
+
+---
+
+## 📦 模组分类
+
+| 系列 | 模组数 | 翻译条目 | 说明 |
+|------|--------|----------|------|
+| **机械动力系列** | 6 | 794 | Create 本体 + 实用物件 + 火炮 + 附加 + dndecor + DnDesires |
+| **农夫乐事系列** | 5 | 268 | FD 本体 + 扩展 + 各类乐事附属（Alex洞穴乐事、装箱乐事、扩展乐事等） |
+| **钠系列** | 3 | 127 | Sodium + Sodium Extra + 动态光源 |
+| **Alex 系列** | 3 | 247 | Alex洞穴 + Alex洞穴乐事 + Alex生物交互 |
+| **其他冒险/生物** | 4 | 561 | spawn(368) + Mowzie的灾变 + [TWM]荒野更新 + Sable |
+| **其他优化/工具** | 2 | 84 | More Culling(4) + Functionality(148) + 钠系列已单独列出 |
+| **其他乐事附属** | 5 | 289 | 任意乐事、蟹农乐事、药师乐事、矿工乐事、橡木乐事、海洋乐事、英灵乐事、蔬菜乐事等 |
+| **其他** | 4 | 410 | 超多生物群系(3) + 暖灶丰年(130) + 樱途旅事(1) + 装箱乐事：作物盛景(58) |
+
+---
+
+## 📊 条目分布
+
+- **≥200条**：spawn(368)、dndecor(448)、create_things_and_misc(189) — 大型模组
+- **50–199条**：12 个模组 — 中型模组
+- **<50条**：15 个模组 — 小型模组/附属
+
+---
+
+## 📝 说明
+
+- 本资源包为 **Minecraft 1.21.1+ NeoForge** 版本
+- 所有翻译条目均来自 `assets/<modid>/lang/zh_cn.json`
+- 详细条目数请查看各模组对应文件
